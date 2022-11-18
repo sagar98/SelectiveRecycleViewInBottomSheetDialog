@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SelectiveRecycleViewInBottomSheetDialog</string>
+    <string name="title">Selective Recycleview using BottomSheetDialog</string>
+</resources>
