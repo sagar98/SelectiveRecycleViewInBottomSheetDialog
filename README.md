@@ -78,7 +78,7 @@ Call ```CustomBottomSheetDialogClass()``` as shown below, where you want to open
 Ex. On particular Button clicked action, bottomsheet dialog will open and user will select single or multiple items.
 
     val sampleBottomSheetDialog = CustomBottomSheetDialogClass(this,
-            this, "Sample Title", sampleList, false)
+            this, "Case A", sampleList, false)
     sampleBottomSheetDialog.show()
     sampleBottomSheetDialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
         ViewGroup.LayoutParams.MATCH_PARENT)
