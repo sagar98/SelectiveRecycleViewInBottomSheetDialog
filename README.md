@@ -6,6 +6,7 @@
 
 This library allows you to use the BottomsheetDialog in recycleview for item/s selection.
 
+[![Group-56.png](https://i.postimg.cc/SxkmwgVn/Group-56.png)](https://postimg.cc/kBYrSF0C)
   
 ## Download  
   
