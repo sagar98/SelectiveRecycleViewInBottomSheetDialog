@@ -100,7 +100,7 @@ responses.
 
 override fun onCustomBottomSheetSelection(type: String) {
      when (type) {
-      "Sample Title" -> {
+      "Case A" -> {
            // your code here
       }
       "Case B" -> {
