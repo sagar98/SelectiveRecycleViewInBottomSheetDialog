@@ -13,90 +13,115 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/title"
-        android:textSize="24dp"
+        android:background="#E0F3FF"
+        android:gravity="center"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
+        android:text="@string/title"
+        android:textSize="24dp"
         android:textStyle="bold"
         android:typeface="sans"
-        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="#E0F3FF"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="48dp"
-        android:background="#E0F3FF"
-        android:padding="8dp"
+        android:fontFamily="sans-serif-medium"
         android:text="Single select BottomSheetDialog"
-        android:textSize="16dp"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRole"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="48dp"
         android:text="Select Your role"
+        app:cornerRadius="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"></Button>
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Selected values"
+        app:layout_constraintEnd_toEndOf="@+id/btnRole"
+        app:layout_constraintStart_toStartOf="@+id/btnRole"
+        app:layout_constraintTop_toBottomOf="@+id/btnRole" />
 
 
     <TextView
         android:id="@+id/tvSelectedRole"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Selected value will appear here."
+        android:layout_marginTop="4dp"
+        android:text="-"
+        android:gravity="center"
+        android:textColor="?android:textColorPrimary"
+        app:layout_constraintEnd_toEndOf="@+id/btnRole"
         app:layout_constraintStart_toStartOf="@+id/btnRole"
-        app:layout_constraintTop_toBottomOf="@+id/btnRole"
-        android:textSize="14dp"
-        android:padding="8dp"
-        android:background="#E1E3E5"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="72dp"
-        android:background="#E0F3FF"
-        android:padding="8dp"
+        android:fontFamily="sans-serif-medium"
         android:text="Multiselect BottomSheetDialog"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSelectedRole" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCities"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="48dp"
         android:text="Select Cities"
+        app:cornerRadius="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/tvSelectedCities"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="-"
+        android:gravity="center"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="@+id/btnCities"
+        app:layout_constraintStart_toStartOf="@+id/btnCities"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Selected values will appear here."
+        android:layout_marginTop="8dp"
+        android:text="Selected values"
+        app:layout_constraintEnd_toEndOf="@+id/btnCities"
         app:layout_constraintStart_toStartOf="@+id/btnCities"
-        app:layout_constraintTop_toBottomOf="@+id/btnCities"
-        android:textSize="14dp"
-        android:padding="8dp"
-        android:background="#E1E3E5"/>
+        app:layout_constraintTop_toBottomOf="@+id/btnCities" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.ViewGroup
 import com.sagar.selectiverecycleviewinbottomsheetdialog.databinding.ActivityMainBinding
 import com.sagar.selectiverecycleviewinbottonsheetdialog.CustomBottomSheetDialogClass
-import com.sagar.selectiverecycleviewinbottonsheetdialog.dataclass.SelectionListObject
+import com.sagar.selectiverecycleviewinbottonsheetdialog.model.SelectionListObject
 import com.sagar.selectiverecycleviewinbottonsheetdialog.interfaces.CustomBottomSheetDialogInterface
 
 class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
         roleList.add(roleObject3)
         roleList.add(roleObject4)
 
-        val cityObject1 = SelectionListObject("1", "Pune", false)
+       /* val cityObject1 = SelectionListObject("1", "Pune", false)
         val cityObject2 = SelectionListObject("3", "Bangalore", false)
         val cityObject3 = SelectionListObject("6", "Mumbai", false)
         val cityObject4 = SelectionListObject("9", "Chennai", false)
@@ -41,22 +41,56 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
         cityList.add(cityObject1)
         cityList.add(cityObject2)
         cityList.add(cityObject3)
-        cityList.add(cityObject4)
+        cityList.add(cityObject4)*/
+        cityList.addAll(
+            arrayOf(
+                SelectionListObject("1", "Pune", false),
+                SelectionListObject("2", "Bangalore", false),
+                SelectionListObject("3", "Mumbai", false),
+                SelectionListObject("4", "Chennai", false),
+                SelectionListObject("5", "Kolkata", false),
+                SelectionListObject("6", "Nashik", false),
+                SelectionListObject("7", "Noida", false),
+                SelectionListObject("8", "City2", false),
+                SelectionListObject("9", "City3", false),
+                SelectionListObject("10", "City4", false),
+                SelectionListObject("11", "City5", false),
+                SelectionListObject("12", "City6", false),
+                SelectionListObject("13", "City7", false),
+                SelectionListObject("14", "City8", false),
+                SelectionListObject("11", "City5", false),
+                SelectionListObject("12", "City6", false),
+                SelectionListObject("13", "City7", false),
+                SelectionListObject("14", "City8", false),
+                SelectionListObject("11", "City5", false),
+                SelectionListObject("12", "City6", false),
+                SelectionListObject("13", "City7", false),
+                SelectionListObject("14", "City8", false)
+            )
+        )
 
-        binding.btnRole.setOnClickListener{
-            val rolesBottomSheetDialog = CustomBottomSheetDialogClass(this,
-                this, "Select Role", roleList, false)
+        binding.btnRole.setOnClickListener {
+            val rolesBottomSheetDialog = CustomBottomSheetDialogClass(
+                this,
+                this, "Select Role", roleList, false
+            )
             rolesBottomSheetDialog.show()
-            rolesBottomSheetDialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT)
+            rolesBottomSheetDialog.window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
         }
 
-        binding.btnCities.setOnClickListener{
-            val cityBottomSheetDialog = CustomBottomSheetDialogClass(this,
-                this, "Select Cities", cityList, true)
+        binding.btnCities.setOnClickListener {
+            val cityBottomSheetDialog = CustomBottomSheetDialogClass(
+                this,
+                this, "Select Cities", cityList, true
+            )
             cityBottomSheetDialog.show()
-            cityBottomSheetDialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT)
+            cityBottomSheetDialog.window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
         }
     }
 
@@ -66,7 +100,7 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
                 selectedRole = ""
                 selectedRoleId = ""
                 for (obj in roleList) {
-                    if(obj.isSelected) {
+                    if (obj.isSelected) {
                         selectedRole = obj.value
                         selectedRoleId = obj.id
                         break
@@ -77,8 +111,8 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
             "Select Cities" -> {
                 selectedCities = ""
                 for (obj in cityList) {
-                    if(obj.isSelected) {
-                        selectedCities = if(selectedCities!="") {
+                    if (obj.isSelected) {
+                        selectedCities = if (selectedCities != "") {
                             selectedCities + "," + obj.value
                         } else {
                             obj.value

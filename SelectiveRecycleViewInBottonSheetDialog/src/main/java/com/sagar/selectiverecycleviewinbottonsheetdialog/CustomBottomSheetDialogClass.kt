@@ -10,8 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 import com.sagar.selectiverecycleviewinbottonsheetdialog.adapter.BottomsheetAdapter
-import com.sagar.selectiverecycleviewinbottonsheetdialog.dataclass.SelectionListObject
+import com.sagar.selectiverecycleviewinbottonsheetdialog.model.SelectionListObject
 import com.sagar.selectiverecycleviewinbottonsheetdialog.interfaces.CustomBottomSheetDialogInterface
 
 class CustomBottomSheetDialogClass(
@@ -22,8 +23,11 @@ class CustomBottomSheetDialogClass(
     BottomSheetDialog(activity), View.OnClickListener {
 
     private var bottomsheetTitle: TextView? = null
-    private lateinit var imgClose: ImageView
-    private lateinit var btnApply: Button
+
+    // private lateinit var imgClose: ImageView
+    private lateinit var btnApply: MaterialButton
+    private lateinit var btnClose: MaterialButton
+    private lateinit var btnClearAll: MaterialButton
     private lateinit var rvBottomSheet: RecyclerView
     private lateinit var bottomsheetAdapter: BottomsheetAdapter
     private var selectionList: ArrayList<SelectionListObject> = ArrayList()
@@ -46,9 +50,11 @@ class CustomBottomSheetDialogClass(
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
         btnApply = findViewById(R.id.btn_apply)!!
+        btnClose = findViewById(R.id.btn_cancel)!!
+        btnClearAll = findViewById(R.id.bt_clear_all)!!
         btnApply.setOnClickListener(this)
-        imgClose = findViewById(R.id.image_close)!!
-        imgClose.setOnClickListener(this)
+        btnClose.setOnClickListener(this)
+        btnClearAll.setOnClickListener(this)
         bottomsheetTitle = findViewById(R.id.text_title)
         bottomsheetTitle!!.text = title
 
@@ -62,10 +68,40 @@ class CustomBottomSheetDialogClass(
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.btn_apply -> {
+                for (i in selectionList.indices) {
+                    selectionList[i].isSelected = selectionList[i].isNewlySelected
+                }
                 listenerContext.onCustomBottomSheetSelection(title)
                 dismiss()
             }
-            R.id.image_close -> dismiss()
+
+            R.id.btn_cancel -> {
+                for (i in selectionList.indices) {
+                    selectionList[i].isNewlySelected = selectionList[i].isSelected
+                }
+                dismiss()
+            }
+
+            R.id.bt_clear_all -> {
+                if (isMultiSelectAllowed) {
+                    for (i in selectionList.indices) {
+                        selectionList[i].isSelected = false
+                        selectionList[i].isNewlySelected = false
+                    }
+                } else {
+                    for (i in selectionList.indices) {
+                        if (selectionList[i].isSelected) {
+                            selectionList[i].isSelected = false
+                            selectionList[i].isNewlySelected = false
+                            break
+                        }
+                    }
+                }
+
+                bottomsheetAdapter.notifyDataSetChanged()
+                listenerContext.onCustomBottomSheetSelection(title)
+                dismiss()
+            }
         }
     }
 }
