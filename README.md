@@ -6,8 +6,14 @@
 
 This library allows you to use the BottomsheetDialog in recycleview for item/s selection.
 
-[![Group-56.png](https://i.postimg.cc/SxkmwgVn/Group-56.png)](https://postimg.cc/kBYrSF0C)
-  
+[![Group-59.png](https://i.postimg.cc/QCYCsM4S/Group-59.png)](https://postimg.cc/YLgMztwm)
+
+### Features
+- **Single option selection**
+- **Multiple option selection**
+- **Clear all selection**
+- **Clear current selection using close bottomsheet**
+
 ## Download  
   
 > Step 1. Add the JitPack repository to your build file:
