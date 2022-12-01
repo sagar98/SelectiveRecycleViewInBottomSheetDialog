@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
                 SelectionListObject("11", "City5", false),
                 SelectionListObject("12", "City6", false),
                 SelectionListObject("13", "City7", false),
-                SelectionListObject("14", "City8", false),
+
             )
         )
 
