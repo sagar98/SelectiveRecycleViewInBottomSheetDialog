@@ -74,7 +74,7 @@ class BottomsheetAdapter(
 
             radioButton.setOnClickListener {
                 for (i in selectionList.indices) {
-                    if (selectionList[i].isSelected) {
+                    if (selectionList[i].isNewlySelected) {
                         selectionList[i].isNewlySelected = false
                         break
                     }

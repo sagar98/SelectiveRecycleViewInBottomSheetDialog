@@ -90,11 +90,8 @@ class CustomBottomSheetDialogClass(
                     }
                 } else {
                     for (i in selectionList.indices) {
-                        if (selectionList[i].isSelected) {
-                            selectionList[i].isSelected = false
-                            selectionList[i].isNewlySelected = false
-                            break
-                        }
+                        selectionList[i].isSelected = false
+                        selectionList[i].isNewlySelected = false
                     }
                 }
 
