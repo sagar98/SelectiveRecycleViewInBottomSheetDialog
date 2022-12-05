@@ -1,12 +1,11 @@
 package com.sagar.selectiverecycleviewinbottomsheetdialog
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import com.sagar.selectiverecycleviewinbottomsheetdialog.databinding.ActivityMainBinding
-import com.sagar.selectiverecycleviewinbottonsheetdialog.CustomBottomSheetDialogClass
-import com.sagar.selectiverecycleviewinbottonsheetdialog.model.SelectionListObject
+import com.sagar.selectiverecycleviewinbottonsheetdialog.CustomBottomSheetDialogFragment
 import com.sagar.selectiverecycleviewinbottonsheetdialog.interfaces.CustomBottomSheetDialogInterface
+import com.sagar.selectiverecycleviewinbottonsheetdialog.model.SelectionListObject
 
 class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
 
@@ -33,15 +32,6 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
         roleList.add(roleObject3)
         roleList.add(roleObject4)
 
-       /* val cityObject1 = SelectionListObject("1", "Pune", false)
-        val cityObject2 = SelectionListObject("3", "Bangalore", false)
-        val cityObject3 = SelectionListObject("6", "Mumbai", false)
-        val cityObject4 = SelectionListObject("9", "Chennai", false)
-
-        cityList.add(cityObject1)
-        cityList.add(cityObject2)
-        cityList.add(cityObject3)
-        cityList.add(cityObject4)*/
         cityList.addAll(
             arrayOf(
                 SelectionListObject("1", "Pune", false),
@@ -64,26 +54,24 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
         )
 
         binding.btnRole.setOnClickListener {
-            val rolesBottomSheetDialog = CustomBottomSheetDialogClass(
-                this,
-                this, "Select Role", roleList, false
+            val rolesBottomDialogFragment = CustomBottomSheetDialogFragment(
+                this, "Select Role",
+                roleList,
+                false
             )
-            rolesBottomSheetDialog.show()
-            rolesBottomSheetDialog.window?.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
+            rolesBottomDialogFragment.show(supportFragmentManager,
+                CustomBottomSheetDialogFragment.TAG
             )
         }
 
         binding.btnCities.setOnClickListener {
-            val cityBottomSheetDialog = CustomBottomSheetDialogClass(
-                this,
-                this, "Select Cities", cityList, true
+            val cityBottomDialogFragment = CustomBottomSheetDialogFragment(
+                this, "Select Cities",
+                cityList,
+                true
             )
-            cityBottomSheetDialog.show()
-            cityBottomSheetDialog.window?.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
+            cityBottomDialogFragment.show(supportFragmentManager,
+                CustomBottomSheetDialogFragment.TAG
             )
         }
     }
