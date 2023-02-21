@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -25,6 +26,7 @@ class CustomBottomSheetDialogFragment(
     private lateinit var btnApply: MaterialButton
     private lateinit var btnClose: MaterialButton
     private lateinit var btnClearAll: MaterialButton
+    private lateinit var btnSelectAll: MaterialButton
     private lateinit var rvBottomSheet: RecyclerView
     private lateinit var bottomsheetAdapter: BottomsheetAdapter
     private var selectionList: ArrayList<SelectionListObject> = ArrayList()
@@ -59,11 +61,15 @@ class CustomBottomSheetDialogFragment(
         btnApply = view.findViewById(R.id.btn_apply)!!
         btnClose = view.findViewById(R.id.btn_cancel)!!
         btnClearAll = view.findViewById(R.id.bt_clear_all)!!
+        btnSelectAll = view.findViewById(R.id.btn_select_all)!!
         btnApply.setOnClickListener(this)
         btnClose.setOnClickListener(this)
         btnClearAll.setOnClickListener(this)
+        btnSelectAll.setOnClickListener(this)
         bottomsheetTitle = view.findViewById(R.id.text_title)
         bottomsheetTitle!!.text = title
+
+        btnSelectAll.isVisible = isMultiSelectAllowed
 
         rvBottomSheet = view.findViewById(R.id.rv_bottomsheet_dialog)!!
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(activity)
@@ -113,6 +119,18 @@ class CustomBottomSheetDialogFragment(
                 bottomsheetAdapter.notifyDataSetChanged()
                 listenerContext.onCustomBottomSheetSelection(title)
                 dismiss()
+            }
+
+            R.id.btn_select_all -> {
+                if (isMultiSelectAllowed) {
+                    for (i in selectionList.indices) {
+                        selectionList[i].isSelected = true
+                        selectionList[i].isNewlySelected = true
+                    }
+                }
+                bottomsheetAdapter.notifyDataSetChanged()
+                listenerContext.onCustomBottomSheetSelection(title)
+                //dismiss()
             }
         }
     }
