@@ -37,7 +37,7 @@ class BottomsheetAdapter(
         if (isMultiSelectAllowed) {
             val holder = viewHolder as ViewHolderMultiSelect
             holder.checkBox.text = selectionList[position].value
-            holder.checkBox.isChecked = selectionList[position].isSelected
+            holder.checkBox.isChecked = selectionList[position].isNewlySelected
         } else {
             val holder = viewHolder as ViewHolderSingleSelect
             holder.radioButton.text = selectionList[position].value
