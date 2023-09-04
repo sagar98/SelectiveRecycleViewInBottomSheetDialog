@@ -1,54 +1,64 @@
 package com.sagar.selectiverecycleviewinbottonsheetdialog
 
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.view.isVisible
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.button.MaterialButton
 import com.sagar.selectiverecycleviewinbottonsheetdialog.adapter.BottomsheetAdapter
+import com.sagar.selectiverecycleviewinbottonsheetdialog.databinding.BottomsheetdialogLayout2Binding
 import com.sagar.selectiverecycleviewinbottonsheetdialog.interfaces.CustomBottomSheetDialogInterface
 import com.sagar.selectiverecycleviewinbottonsheetdialog.model.SelectionListObject
 
+
 class CustomBottomSheetDialogFragment(
-    listenerContext: CustomBottomSheetDialogInterface, private var title: String,
-    selectionList: ArrayList<SelectionListObject>, isMultiSelectAllowed: Boolean
-) : BottomSheetDialogFragment(), View.OnClickListener {
+    listenerContext: CustomBottomSheetDialogInterface,
+    private var title: String,
+    selectionList: ArrayList<SelectionListObject>,
+    isMultiSelectAllowed: Boolean
+) : BottomSheetDialogFragment(), PopupMenu.OnMenuItemClickListener {
 
-    private var bottomsheetTitle: TextView? = null
+    private lateinit var binding: BottomsheetdialogLayout2Binding
+    // private lateinit var binding : BottomsheetdialogLayoutBinding
 
-    private lateinit var btnApply: MaterialButton
-    private lateinit var btnClose: MaterialButton
-    private lateinit var btnClearAll: MaterialButton
-    private lateinit var btnSelectAll: MaterialButton
-    private lateinit var rvBottomSheet: RecyclerView
-    private lateinit var bottomsheetAdapter: BottomsheetAdapter
+    private lateinit var bottomSheetAdapter: BottomsheetAdapter
+
     private var selectionList: ArrayList<SelectionListObject> = ArrayList()
+    private var tempSelectionList: ArrayList<SelectionListObject> =
+        ArrayList() //to save temp selection values
+
     private var listenerContext: CustomBottomSheetDialogInterface
     private var isMultiSelectAllowed: Boolean = false
 
-    companion object{
-        const val TAG = "BottomSheetFragment"
+    companion object {
+        const val TAG = "BottomSheetSelectionFragment"
     }
 
     init {
         this.listenerContext = listenerContext
         this.selectionList = selectionList
+        this.tempSelectionList = selectionList
         this.isMultiSelectAllowed = isMultiSelectAllowed
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.BottomSheetStyle)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.bottomsheetdialog_layout, container, false)
+    ): View {
+        binding = BottomsheetdialogLayout2Binding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,37 +68,57 @@ class CustomBottomSheetDialogFragment(
             BottomSheetBehavior.from(view.parent as View)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
-        btnApply = view.findViewById(R.id.btn_apply)!!
-        btnClose = view.findViewById(R.id.btn_cancel)!!
-        btnClearAll = view.findViewById(R.id.bt_clear_all)!!
-        btnSelectAll = view.findViewById(R.id.btn_select_all)!!
-        btnApply.setOnClickListener(this)
-        btnClose.setOnClickListener(this)
-        btnClearAll.setOnClickListener(this)
-        btnSelectAll.setOnClickListener(this)
-        bottomsheetTitle = view.findViewById(R.id.text_title)
-        bottomsheetTitle!!.text = title
+        bottomSheetAdapter = BottomsheetAdapter(tempSelectionList, isMultiSelectAllowed)
 
-        btnSelectAll.isVisible = isMultiSelectAllowed
+        binding.apply {
+            textTitle.text = title
+           // btnSelectAll.isVisible = isMultiSelectAllowed
+            selectAll.isEnabled = isMultiSelectAllowed
 
-        rvBottomSheet = view.findViewById(R.id.rv_bottomsheet_dialog)!!
-        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(activity)
-        rvBottomSheet.layoutManager = layoutManager
-        bottomsheetAdapter = BottomsheetAdapter(selectionList, isMultiSelectAllowed)
-        rvBottomSheet.adapter = bottomsheetAdapter
-
-    }
-
-    override fun onDismiss(dialog: DialogInterface) {
-        for (i in selectionList.indices) {
-            selectionList[i].isNewlySelected = selectionList[i].isSelected
+            recyclerView.apply {
+                layoutManager = LinearLayoutManager(activity)
+                adapter = bottomSheetAdapter
+            }
         }
-        super.onDismiss(dialog)
+
+        clickListener()
+
     }
 
-    override fun onClick(view: View?) {
-        when (view?.id) {
-            R.id.btn_apply -> {
+    private fun clickListener() {
+        binding.apply {
+            /* btnSelectAll.setOnClickListener {
+                 if (isMultiSelectAllowed) {
+                     for (i in tempSelectionList.indices) {
+                         //tempSelectionList[i].isSelected = true
+                         tempSelectionList[i].isNewlySelected = true
+                     }
+                 }
+                 bottomSheetAdapter.notifyDataSetChanged()
+                 //listenerContext.onCustomBottomSheetSelection(title)
+                 //dismiss()
+             }
+
+             btClearAll.setOnClickListener {
+                 if (isMultiSelectAllowed) {
+                     for (i in tempSelectionList.indices) {
+                         // tempSelectionList[i].isSelected = false
+                         tempSelectionList[i].isNewlySelected = false
+                     }
+                 } else {
+                     for (i in tempSelectionList.indices) {
+                         // tempSelectionList[i].isSelected = false
+                         tempSelectionList[i].isNewlySelected = false
+                     }
+                 }
+
+                 bottomSheetAdapter.notifyDataSetChanged()
+                 //listenerContext.onCustomBottomSheetSelection(title)
+                 //dismiss()
+             }*/
+
+            btnApply.setOnClickListener {
+                selectionList = tempSelectionList
                 for (i in selectionList.indices) {
                     selectionList[i].isSelected = selectionList[i].isNewlySelected
                 }
@@ -96,42 +126,103 @@ class CustomBottomSheetDialogFragment(
                 dismiss()
             }
 
-            R.id.btn_cancel -> {
-                for (i in selectionList.indices) {
-                    selectionList[i].isNewlySelected = selectionList[i].isSelected
+            btnCancel.setOnClickListener {
+                for (i in tempSelectionList.indices) {
+                    tempSelectionList[i].isNewlySelected = tempSelectionList[i].isSelected
                 }
                 dismiss()
             }
 
-            R.id.bt_clear_all -> {
+            selectAll.setOnClickListener {
                 if (isMultiSelectAllowed) {
-                    for (i in selectionList.indices) {
-                        selectionList[i].isSelected = false
-                        selectionList[i].isNewlySelected = false
+                    for (i in tempSelectionList.indices) {
+                        //tempSelectionList[i].isSelected = true
+                        tempSelectionList[i].isNewlySelected = true
+                    }
+                }
+                bottomSheetAdapter.notifyDataSetChanged()
+                //listenerContext.onCustomBottomSheetSelection(title)
+                //dismiss()
+            }
+
+            clearAll.setOnClickListener {
+                if (isMultiSelectAllowed) {
+                    for (i in tempSelectionList.indices) {
+                        // tempSelectionList[i].isSelected = false
+                        tempSelectionList[i].isNewlySelected = false
                     }
                 } else {
-                    for (i in selectionList.indices) {
-                        selectionList[i].isSelected = false
-                        selectionList[i].isNewlySelected = false
+                    for (i in tempSelectionList.indices) {
+                        // tempSelectionList[i].isSelected = false
+                        tempSelectionList[i].isNewlySelected = false
                     }
                 }
 
-                bottomsheetAdapter.notifyDataSetChanged()
-                listenerContext.onCustomBottomSheetSelection(title)
-                dismiss()
+                bottomSheetAdapter.notifyDataSetChanged()
+                //listenerContext.onCustomBottomSheetSelection(title)
+                //dismiss()
             }
 
-            R.id.btn_select_all -> {
-                if (isMultiSelectAllowed) {
-                    for (i in selectionList.indices) {
-                        selectionList[i].isSelected = true
-                        selectionList[i].isNewlySelected = true
-                    }
-                }
-                bottomsheetAdapter.notifyDataSetChanged()
-                listenerContext.onCustomBottomSheetSelection(title)
-                //dismiss()
+           /* options.setOnClickListener {
+                showPopupMenuOptions(it)
+            }*/
+
+            close.setOnClickListener {
+                dismiss()
             }
         }
     }
+
+    private fun showPopupMenuOptions(v: View) {
+        PopupMenu(activity, v).apply {
+            setOnMenuItemClickListener(this@CustomBottomSheetDialogFragment)
+            inflate(R.menu.menu_options)
+            show()
+        }
+    }
+
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_clear_all -> {
+                if (isMultiSelectAllowed) {
+                    for (i in tempSelectionList.indices) {
+                        // tempSelectionList[i].isSelected = false
+                        tempSelectionList[i].isNewlySelected = false
+                    }
+                } else {
+                    for (i in tempSelectionList.indices) {
+                        // tempSelectionList[i].isSelected = false
+                        tempSelectionList[i].isNewlySelected = false
+                    }
+                }
+
+                bottomSheetAdapter.notifyDataSetChanged()
+                //listenerContext.onCustomBottomSheetSelection(title)
+                //dismiss()
+                true
+            }
+
+            R.id.action_select_all -> {
+                if (isMultiSelectAllowed) {
+                    for (i in tempSelectionList.indices) {
+                        //tempSelectionList[i].isSelected = true
+                        tempSelectionList[i].isNewlySelected = true
+                    }
+                }
+                bottomSheetAdapter.notifyDataSetChanged()
+                //listenerContext.onCustomBottomSheetSelection(title)
+                //dismiss()
+                true
+            }
+            else -> false
+        }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        for (i in tempSelectionList.indices) {
+            tempSelectionList[i].isNewlySelected = tempSelectionList[i].isSelected
+        }
+        super.onDismiss(dialog)
+    }
+
 }
