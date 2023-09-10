@@ -49,7 +49,7 @@ class CustomBottomSheetDialogFragment(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.BottomSheetStyle)
+       // setStyle(STYLE_NORMAL, R.style.BottomSheetStyle)
     }
 
     override fun onCreateView(
