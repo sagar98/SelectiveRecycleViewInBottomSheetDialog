@@ -14,7 +14,7 @@ import com.sagar.selectiverecycleviewinbottonsheetdialog.interfaces.CustomBottom
 import com.sagar.selectiverecycleviewinbottonsheetdialog.model.SelectionListObject
 
 
-class CustomBottomSheetDialogLamdaFragment(
+class CustomBottomSheetDialogLambdaFragment(
     private var title: String,
     selectionList: ArrayList<SelectionListObject>,
     isMultiSelectAllowed: Boolean,
