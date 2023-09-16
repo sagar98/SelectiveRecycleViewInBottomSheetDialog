@@ -22,11 +22,9 @@ class CustomBottomSheetDialogFragment(
     private var title: String,
     selectionList: ArrayList<SelectionListObject>,
     isMultiSelectAllowed: Boolean
-) : BottomSheetDialogFragment(), PopupMenu.OnMenuItemClickListener {
+) : BottomSheetDialogFragment() {
 
     private lateinit var binding: BottomsheetdialogLayout2Binding
-    // private lateinit var binding : BottomsheetdialogLayoutBinding
-
     private lateinit var bottomSheetAdapter: BottomsheetAdapter
 
     private var selectionList: ArrayList<SelectionListObject> = ArrayList()
@@ -45,11 +43,6 @@ class CustomBottomSheetDialogFragment(
         this.selectionList = selectionList
         this.tempSelectionList = selectionList
         this.isMultiSelectAllowed = isMultiSelectAllowed
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-       // setStyle(STYLE_NORMAL, R.style.BottomSheetStyle)
     }
 
     override fun onCreateView(
@@ -72,7 +65,6 @@ class CustomBottomSheetDialogFragment(
 
         binding.apply {
             textTitle.text = title
-           // btnSelectAll.isVisible = isMultiSelectAllowed
             selectAll.isEnabled = isMultiSelectAllowed
 
             recyclerView.apply {
@@ -87,36 +79,6 @@ class CustomBottomSheetDialogFragment(
 
     private fun clickListener() {
         binding.apply {
-            /* btnSelectAll.setOnClickListener {
-                 if (isMultiSelectAllowed) {
-                     for (i in tempSelectionList.indices) {
-                         //tempSelectionList[i].isSelected = true
-                         tempSelectionList[i].isNewlySelected = true
-                     }
-                 }
-                 bottomSheetAdapter.notifyDataSetChanged()
-                 //listenerContext.onCustomBottomSheetSelection(title)
-                 //dismiss()
-             }
-
-             btClearAll.setOnClickListener {
-                 if (isMultiSelectAllowed) {
-                     for (i in tempSelectionList.indices) {
-                         // tempSelectionList[i].isSelected = false
-                         tempSelectionList[i].isNewlySelected = false
-                     }
-                 } else {
-                     for (i in tempSelectionList.indices) {
-                         // tempSelectionList[i].isSelected = false
-                         tempSelectionList[i].isNewlySelected = false
-                     }
-                 }
-
-                 bottomSheetAdapter.notifyDataSetChanged()
-                 //listenerContext.onCustomBottomSheetSelection(title)
-                 //dismiss()
-             }*/
-
             btnApply.setOnClickListener {
                 selectionList = tempSelectionList
                 for (i in selectionList.indices) {
@@ -141,8 +103,6 @@ class CustomBottomSheetDialogFragment(
                     }
                 }
                 bottomSheetAdapter.notifyDataSetChanged()
-                //listenerContext.onCustomBottomSheetSelection(title)
-                //dismiss()
             }
 
             clearAll.setOnClickListener {
@@ -159,62 +119,12 @@ class CustomBottomSheetDialogFragment(
                 }
 
                 bottomSheetAdapter.notifyDataSetChanged()
-                //listenerContext.onCustomBottomSheetSelection(title)
-                //dismiss()
             }
 
-           /* options.setOnClickListener {
-                showPopupMenuOptions(it)
-            }*/
 
             close.setOnClickListener {
                 dismiss()
             }
-        }
-    }
-
-    private fun showPopupMenuOptions(v: View) {
-        PopupMenu(activity, v).apply {
-            setOnMenuItemClickListener(this@CustomBottomSheetDialogFragment)
-            inflate(R.menu.menu_options)
-            show()
-        }
-    }
-
-    override fun onMenuItemClick(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_clear_all -> {
-                if (isMultiSelectAllowed) {
-                    for (i in tempSelectionList.indices) {
-                        // tempSelectionList[i].isSelected = false
-                        tempSelectionList[i].isNewlySelected = false
-                    }
-                } else {
-                    for (i in tempSelectionList.indices) {
-                        // tempSelectionList[i].isSelected = false
-                        tempSelectionList[i].isNewlySelected = false
-                    }
-                }
-
-                bottomSheetAdapter.notifyDataSetChanged()
-                //listenerContext.onCustomBottomSheetSelection(title)
-                //dismiss()
-                true
-            }
-
-            R.id.action_select_all -> {
-                if (isMultiSelectAllowed) {
-                    for (i in tempSelectionList.indices) {
-                        //tempSelectionList[i].isSelected = true
-                        tempSelectionList[i].isNewlySelected = true
-                    }
-                }
-                bottomSheetAdapter.notifyDataSetChanged()
-                //listenerContext.onCustomBottomSheetSelection(title)
-                //dismiss()
-                true
-            }
-            else -> false
         }
     }
 
