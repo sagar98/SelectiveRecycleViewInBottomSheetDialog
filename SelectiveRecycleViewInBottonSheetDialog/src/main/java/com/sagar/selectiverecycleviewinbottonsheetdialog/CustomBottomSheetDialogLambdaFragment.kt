@@ -1,13 +1,10 @@
 package com.sagar.selectiverecycleviewinbottonsheetdialog
 
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -17,21 +14,22 @@ import com.sagar.selectiverecycleviewinbottonsheetdialog.interfaces.CustomBottom
 import com.sagar.selectiverecycleviewinbottonsheetdialog.model.SelectionListObject
 
 
-class CustomBottomSheetDialogFragment(
-    listenerContext: CustomBottomSheetDialogInterface,
+class CustomBottomSheetDialogLambdaFragment(
     private var title: String,
     selectionList: ArrayList<SelectionListObject>,
-    isMultiSelectAllowed: Boolean
+    isMultiSelectAllowed: Boolean,
+    private val onApplyClicked: () -> Unit
 ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: BottomsheetdialogLayout2Binding
+
     private lateinit var bottomSheetAdapter: BottomsheetAdapter
 
     private var selectionList: ArrayList<SelectionListObject> = ArrayList()
     private var tempSelectionList: ArrayList<SelectionListObject> =
         ArrayList() //to save temp selection values
 
-    private var listenerContext: CustomBottomSheetDialogInterface
+    private var listenerContext: CustomBottomSheetDialogInterface? = null
     private var isMultiSelectAllowed: Boolean = false
 
     companion object {
@@ -39,7 +37,6 @@ class CustomBottomSheetDialogFragment(
     }
 
     init {
-        this.listenerContext = listenerContext
         this.selectionList = selectionList
         this.tempSelectionList = selectionList
         this.isMultiSelectAllowed = isMultiSelectAllowed
@@ -84,7 +81,7 @@ class CustomBottomSheetDialogFragment(
                 for (i in selectionList.indices) {
                     selectionList[i].isSelected = selectionList[i].isNewlySelected
                 }
-                listenerContext.onCustomBottomSheetSelection(title)
+                onApplyClicked()
                 dismiss()
             }
 
@@ -98,7 +95,6 @@ class CustomBottomSheetDialogFragment(
             selectAll.setOnClickListener {
                 if (isMultiSelectAllowed) {
                     for (i in tempSelectionList.indices) {
-                        //tempSelectionList[i].isSelected = true
                         tempSelectionList[i].isNewlySelected = true
                     }
                 }
@@ -108,19 +104,15 @@ class CustomBottomSheetDialogFragment(
             clearAll.setOnClickListener {
                 if (isMultiSelectAllowed) {
                     for (i in tempSelectionList.indices) {
-                        // tempSelectionList[i].isSelected = false
                         tempSelectionList[i].isNewlySelected = false
                     }
                 } else {
                     for (i in tempSelectionList.indices) {
-                        // tempSelectionList[i].isSelected = false
                         tempSelectionList[i].isNewlySelected = false
                     }
                 }
-
                 bottomSheetAdapter.notifyDataSetChanged()
             }
-
 
             close.setOnClickListener {
                 dismiss()

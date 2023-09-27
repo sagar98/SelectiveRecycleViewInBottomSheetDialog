@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.sagar.selectiverecycleviewinbottomsheetdialog.databinding.ActivityMainBinding
 import com.sagar.selectiverecycleviewinbottonsheetdialog.CustomBottomSheetDialogFragment
+import com.sagar.selectiverecycleviewinbottonsheetdialog.CustomBottomSheetDialogLamdaFragment
 import com.sagar.selectiverecycleviewinbottonsheetdialog.interfaces.CustomBottomSheetDialogInterface
 import com.sagar.selectiverecycleviewinbottonsheetdialog.model.SelectionListObject
 
@@ -59,17 +60,42 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
                 roleList,
                 false
             )
+            /*val rolesBottomDialogFragment = CustomBottomSheetDialogFragment( "Select Role", roleList, false){
+                selectedRole = ""
+                selectedRoleId = ""
+                for (obj in roleList) {
+                    if (obj.isSelected) {
+                        selectedRole = obj.value
+                        selectedRoleId = obj.id
+                        break
+                    }
+                }
+                binding.tvSelectedRole.text = selectedRole
+            }*/
             rolesBottomDialogFragment.show(supportFragmentManager,
                 CustomBottomSheetDialogFragment.TAG
             )
         }
 
         binding.btnCities.setOnClickListener {
-            val cityBottomDialogFragment = CustomBottomSheetDialogFragment(
+          /*  val cityBottomDialogFragment = CustomBottomSheetDialogFragment(
                 this, "Select Cities",
                 cityList,
                 true
-            )
+            )*/
+            val cityBottomDialogFragment = CustomBottomSheetDialogLamdaFragment("Select Cities", cityList, true){
+                selectedCities = ""
+                for (obj in cityList) {
+                    if (obj.isSelected) {
+                        selectedCities = if (selectedCities != "") {
+                            selectedCities + "," + obj.value
+                        } else {
+                            obj.value
+                        }
+                    }
+                }
+                binding.tvSelectedCities.text = selectedCities
+            }
             cityBottomDialogFragment.show(supportFragmentManager,
                 CustomBottomSheetDialogFragment.TAG
             )
