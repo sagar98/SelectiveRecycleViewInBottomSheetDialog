@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.sagar.selectiverecycleviewinbottomsheetdialog.databinding.ActivityMainBinding
 import com.sagar.selectiverecycleviewinbottonsheetdialog.CustomBottomSheetDialogFragment
-import com.sagar.selectiverecycleviewinbottonsheetdialog.CustomBottomSheetDialogLamdaFragment
+import com.sagar.selectiverecycleviewinbottonsheetdialog.CustomBottomSheetDialogLambdaFragment
 import com.sagar.selectiverecycleviewinbottonsheetdialog.interfaces.CustomBottomSheetDialogInterface
 import com.sagar.selectiverecycleviewinbottonsheetdialog.model.SelectionListObject
 
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
                 cityList,
                 true
             )*/
-            val cityBottomDialogFragment = CustomBottomSheetDialogLamdaFragment("Select Cities", cityList, true){
+            val cityBottomDialogFragment = CustomBottomSheetDialogLambdaFragment("Select Cities", cityList, true){
                 selectedCities = ""
                 for (obj in cityList) {
                     if (obj.isSelected) {
