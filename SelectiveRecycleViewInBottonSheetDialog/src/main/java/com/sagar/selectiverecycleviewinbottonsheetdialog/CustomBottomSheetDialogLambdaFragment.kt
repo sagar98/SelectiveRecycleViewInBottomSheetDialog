@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -69,6 +70,9 @@ class CustomBottomSheetDialogLambdaFragment(
                 adapter = bottomSheetAdapter
             }
         }
+
+        binding.recyclerView.isVisible = selectionList.isNotEmpty()
+        binding.emptyList.isVisible = selectionList.isEmpty()
 
         clickListener()
 

@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
     private lateinit var binding: ActivityMainBinding
     private var roleList: ArrayList<SelectionListObject> = ArrayList()
     private var cityList: ArrayList<SelectionListObject> = ArrayList()
+    private var emptyList: ArrayList<SelectionListObject> = ArrayList()
     private lateinit var selectedRole: String
     private lateinit var selectedRoleId: String
     private lateinit var selectedCities: String
@@ -95,6 +96,15 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
                     }
                 }
                 binding.tvSelectedCities.text = selectedCities
+            }
+            cityBottomDialogFragment.show(supportFragmentManager,
+                CustomBottomSheetDialogFragment.TAG
+            )
+        }
+
+        binding.btnNoData.setOnClickListener {
+            val cityBottomDialogFragment = CustomBottomSheetDialogLambdaFragment("List Title", emptyList, true){
+
             }
             cityBottomDialogFragment.show(supportFragmentManager,
                 CustomBottomSheetDialogFragment.TAG
