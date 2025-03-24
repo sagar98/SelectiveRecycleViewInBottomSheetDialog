@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -73,8 +74,10 @@ class CustomBottomSheetDialogFragment(
             }
         }
 
-        clickListener()
+        binding.recyclerView.isVisible = selectionList.isNotEmpty()
+        binding.emptyList.isVisible = selectionList.isEmpty()
 
+        clickListener()
     }
 
     private fun clickListener() {

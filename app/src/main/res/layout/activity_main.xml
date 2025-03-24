@@ -70,7 +70,7 @@
         android:layout_marginTop="4dp"
         android:text="-"
         android:gravity="center"
-        android:textColor="?android:textColorPrimary"
+        android:textColor="?colorPrimary"
         app:layout_constraintEnd_toEndOf="@+id/btnRole"
         app:layout_constraintStart_toStartOf="@+id/btnRole"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -108,7 +108,7 @@
         android:layout_marginTop="4dp"
         android:text="-"
         android:gravity="center"
-        android:textColor="?android:textColorPrimary"
+        android:textColor="?colorPrimary"
         android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="@+id/btnCities"
         app:layout_constraintStart_toStartOf="@+id/btnCities"
