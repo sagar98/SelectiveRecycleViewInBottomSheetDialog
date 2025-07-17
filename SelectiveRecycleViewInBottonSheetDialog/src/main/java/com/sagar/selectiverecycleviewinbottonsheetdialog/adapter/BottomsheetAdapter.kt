@@ -28,12 +28,10 @@ class BottomsheetAdapter(
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         if (isMultiSelectAllowed) {
             val holder = viewHolder as ViewHolderMultiSelect
-            holder.checkBox.text = selectionList[position].value
-            holder.checkBox.isChecked = selectionList[position].isNewlySelected
+            holder.bind(selectionList[position])
         } else {
             val holder = viewHolder as ViewHolderSingleSelect
-            holder.radioButton.text = selectionList[position].value
-            holder.radioButton.isChecked = selectionList[position].isNewlySelected
+            holder.bind(selectionList[position])
         }
     }
 
@@ -53,6 +51,11 @@ class BottomsheetAdapter(
                 selectionList[adapterPosition].isNewlySelected =
                     !selectionList[adapterPosition].isNewlySelected
             }
+        }
+
+        fun bind(item: SelectionListObject){
+            checkBox.text = item.value
+            checkBox.isChecked = item.isNewlySelected
         }
     }
 
@@ -75,6 +78,12 @@ class BottomsheetAdapter(
                 notifyDataSetChanged()
             }
         }
+
+        fun bind(item: SelectionListObject){
+            radioButton.text = item.value
+            radioButton.isChecked = item.isNewlySelected
+        }
+
     }
 
 
