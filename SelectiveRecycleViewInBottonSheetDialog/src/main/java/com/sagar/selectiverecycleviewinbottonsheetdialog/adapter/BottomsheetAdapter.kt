@@ -10,17 +10,9 @@ import com.sagar.selectiverecycleviewinbottonsheetdialog.R
 import com.sagar.selectiverecycleviewinbottonsheetdialog.model.SelectionListObject
 
 class BottomsheetAdapter(
-    selectionList: ArrayList<SelectionListObject>,
-    isMultiSelectAllowed: Boolean
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private val selectionList: ArrayList<SelectionListObject>
+    private val selectionList: ArrayList<SelectionListObject>,
     private val isMultiSelectAllowed: Boolean
-
-    init {
-        this.selectionList = selectionList
-        this.isMultiSelectAllowed = isMultiSelectAllowed
-    }
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)

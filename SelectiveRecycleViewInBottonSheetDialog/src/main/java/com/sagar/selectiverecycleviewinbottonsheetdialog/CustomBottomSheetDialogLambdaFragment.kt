@@ -63,7 +63,8 @@ class CustomBottomSheetDialogLambdaFragment(
 
         binding.apply {
             textTitle.text = title
-            selectAll.isEnabled = isMultiSelectAllowed
+            selectAll.isEnabled = isMultiSelectAllowed && selectionList.isNotEmpty()
+            clearAll.isEnabled = selectionList.isNotEmpty()
 
             recyclerView.apply {
                 layoutManager = LinearLayoutManager(activity)

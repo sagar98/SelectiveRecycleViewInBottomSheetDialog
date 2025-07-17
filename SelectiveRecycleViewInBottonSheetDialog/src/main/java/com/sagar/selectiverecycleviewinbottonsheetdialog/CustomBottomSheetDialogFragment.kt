@@ -19,7 +19,7 @@ import com.sagar.selectiverecycleviewinbottonsheetdialog.model.SelectionListObje
 
 
 class CustomBottomSheetDialogFragment(
-    listenerContext: CustomBottomSheetDialogInterface,
+    private var listenerContext: CustomBottomSheetDialogInterface,
     private var title: String,
     selectionList: ArrayList<SelectionListObject>,
     isMultiSelectAllowed: Boolean
@@ -32,7 +32,6 @@ class CustomBottomSheetDialogFragment(
     private var tempSelectionList: ArrayList<SelectionListObject> =
         ArrayList() //to save temp selection values
 
-    private var listenerContext: CustomBottomSheetDialogInterface
     private var isMultiSelectAllowed: Boolean = false
 
     companion object {
@@ -40,7 +39,6 @@ class CustomBottomSheetDialogFragment(
     }
 
     init {
-        this.listenerContext = listenerContext
         this.selectionList = selectionList
         this.tempSelectionList = selectionList
         this.isMultiSelectAllowed = isMultiSelectAllowed
@@ -66,7 +64,8 @@ class CustomBottomSheetDialogFragment(
 
         binding.apply {
             textTitle.text = title
-            selectAll.isEnabled = isMultiSelectAllowed
+            selectAll.isEnabled = isMultiSelectAllowed && selectionList.isNotEmpty()
+            clearAll.isEnabled = selectionList.isNotEmpty()
 
             recyclerView.apply {
                 layoutManager = LinearLayoutManager(activity)
