@@ -42,9 +42,13 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
 
 		roleList = arrayListOf(
 			SelectionListObject("1", "Developer", false),
-			SelectionListObject("4", "Project Manager", false),
 			SelectionListObject("2", "Team Lead", false),
-			SelectionListObject("7", "Analyst", false)
+			SelectionListObject("3", "Senior Manager", false),
+			SelectionListObject("4", "Project Manager", false),
+			SelectionListObject("5", "CTO", false),
+			SelectionListObject("6", "CEO", false),
+			SelectionListObject("7", "Business Analyst", false),
+			SelectionListObject("8", "Quality Analyst", false),
 		)
 
 		cityList = arrayListOf(
@@ -55,15 +59,15 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
 			SelectionListObject("5", "Kolkata", false),
 			SelectionListObject("6", "Nashik", false),
 			SelectionListObject("7", "Noida", false),
-			SelectionListObject("8", "City2", false),
-			SelectionListObject("9", "City3", false),
-			SelectionListObject("10", "City4", false),
-			SelectionListObject("11", "City5", false),
-			SelectionListObject("12", "City6", false),
-			SelectionListObject("13", "City7", false),
-			SelectionListObject("14", "City8", false),
-			SelectionListObject("15", "City5", false),
-			SelectionListObject("16", "City6", false),
+			SelectionListObject("8", "Jaipur", false),
+			SelectionListObject("9", "Lucknow", false),
+			SelectionListObject("10", "Ahmedabad", false),
+			SelectionListObject("11", "Hyderabad", false),
+			SelectionListObject("12", "Delhi", false),
+			SelectionListObject("13", "Kanpur", false),
+			SelectionListObject("14", "Patna", false),
+			SelectionListObject("15", "Surat", false),
+			SelectionListObject("16", "Visakhapatnam", false),
 		)
 
 		binding.btnRole.setOnClickListener {
