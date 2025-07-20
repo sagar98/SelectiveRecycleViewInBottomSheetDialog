@@ -71,11 +71,31 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
 		)
 
 		binding.btnRole.setOnClickListener {
-			val rolesBottomDialogFragment = CustomBottomSheetDialogFragment(
+			val rolesBottomDialogFragment = CustomBottomSheetDialogLambdaFragment(
+				"Select Role",
+				roleList,
+				false,
+                showSearch = true
+			){
+				selectedRole = ""
+				selectedRoleId = ""
+				for (obj in roleList) {
+					if (obj.isSelected) {
+						selectedRole = obj.value
+						selectedRoleId = obj.id
+						break
+					}
+				}
+				if (selectedRole.isNotBlank()) binding.tvSelectedRole.text = selectedRole
+				else binding.tvSelectedRole.text = "No Role Selected"
+			}
+			/*val rolesBottomDialogFragment = CustomBottomSheetDialogFragment(
 				this, "Select Role",
 				roleList,
-				false
-			)
+				false,
+				showSearch = true
+			)*/
+
 			rolesBottomDialogFragment.show(
 				supportFragmentManager,
 				CustomBottomSheetDialogFragment.TAG
@@ -84,19 +104,30 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
 
 		binding.btnCities.setOnClickListener {
 			val cityBottomDialogFragment =
-				CustomBottomSheetDialogLambdaFragment("Select Cities", cityList, true) {
+				CustomBottomSheetDialogLambdaFragment("Select Cities", cityList,
+                    isMultiSelectAllowed = true,
+                    showSearch = true
+                ) {
 					selectedCities = ""
 					for (obj in cityList) {
 						if (obj.isSelected) {
 							selectedCities = if (selectedCities != "") {
-								selectedCities + "," + obj.value
+								selectedCities + ", " + obj.value
 							} else {
 								obj.value
 							}
 						}
 					}
-					binding.tvSelectedCities.text = selectedCities
+
+					if (selectedCities.isNotBlank()) binding.tvSelectedCities.text = selectedCities
+					else binding.tvSelectedCities.text = "No City Selected"
 				}
+			/*val cityBottomDialogFragment = CustomBottomSheetDialogFragment(
+				this, "Select Cities",
+				cityList,
+				true,
+				showSearch = true
+			)*/
 			cityBottomDialogFragment.show(
 				supportFragmentManager,
 				CustomBottomSheetDialogFragment.TAG
@@ -135,7 +166,7 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
 				for (obj in cityList) {
 					if (obj.isSelected) {
 						selectedCities = if (selectedCities != "") {
-							selectedCities + "," + obj.value
+							selectedCities + ", " + obj.value
 						} else {
 							obj.value
 						}
