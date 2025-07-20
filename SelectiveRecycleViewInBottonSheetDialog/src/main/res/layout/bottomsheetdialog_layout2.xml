@@ -32,8 +32,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="16dp"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="2"
@@ -70,6 +70,42 @@
 
     </LinearLayout>
 
+    <com.google.android.material.search.SearchBar
+        android:id="@+id/searchBar"
+        style="@style/Widget.Material3.SearchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter text here..."
+        android:visibility="gone"
+        app:defaultMarginsEnabled="false"
+        tools:visibility="gone" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/searchView"
+        style="@style/App.SearchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="2dp"
+        android:visibility="visible"
+        android:layout_marginBottom="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter text here..."
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColorHint="?attr/colorOnSurfaceVariant" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -81,18 +117,32 @@
         android:layout_weight="1"
         android:clipToPadding="false"
         android:paddingVertical="8dp" />
-    
+
     <TextView
         android:id="@+id/empty_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Empty List"
-        android:gravity="center"
         android:layout_gravity="center"
         android:drawablePadding="12dp"
+        android:gravity="center"
         android:padding="32dp"
+        android:text="Empty List"
+        android:visibility="gone"
         android:textAppearance="?textAppearanceLabelMedium"
         app:drawableStartCompat="@drawable/ic_data_object_24" />
+
+    <TextView
+        android:id="@+id/empty_search_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:padding="32dp"
+        android:visibility="gone"
+        android:text="No match found"
+        android:textAppearance="?textAppearanceLabelMedium"
+        app:drawableTopCompat="@drawable/ic_search_24" />
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
