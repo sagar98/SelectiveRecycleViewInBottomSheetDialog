@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -15,6 +16,11 @@ import com.sagar.selectiverecycleviewinbottonsheetdialog.adapter.BottomsheetAdap
 import com.sagar.selectiverecycleviewinbottonsheetdialog.databinding.BottomsheetdialogLayout2Binding
 import com.sagar.selectiverecycleviewinbottonsheetdialog.interfaces.OnFilterResultListener
 import com.sagar.selectiverecycleviewinbottonsheetdialog.model.SelectionListObject
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class CustomBottomSheetDialogLambdaFragment(
@@ -28,6 +34,18 @@ class CustomBottomSheetDialogLambdaFragment(
     private lateinit var binding: BottomsheetdialogLayout2Binding
     private lateinit var bottomSheetAdapter: BottomsheetAdapter
     private var tempSelectionList: ArrayList<SelectionListObject> = ArrayList() //to save temp selection values
+
+    private val mainScope = MainScope()
+    private var filterJob: Job? = null
+
+    companion object {
+        fun safeShow(fragmentManager: FragmentManager, tag: String, fragment: CustomBottomSheetDialogLambdaFragment) {
+            if (fragment.isAdded) return
+            if (fragmentManager.findFragmentByTag(tag) == null) {
+                fragment.show(fragmentManager, tag)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,7 +127,13 @@ class CustomBottomSheetDialogLambdaFragment(
         binding.etSearch.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                bottomSheetAdapter.filter(s.toString())
+                filterJob?.cancel()
+                filterJob = mainScope.launch {
+                    delay(200)
+                    bottomSheetAdapter.filter(s.toString())
+                }
+
+               // bottomSheetAdapter.filter(s.toString())
             }
             override fun afterTextChanged(s: Editable?) {}
         })
@@ -126,6 +150,12 @@ class CustomBottomSheetDialogLambdaFragment(
             item.isNewlySelected = selectionList.getOrNull(i)?.isSelected == true
         }
         super.onDismiss(dialog)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        filterJob?.cancel()
+        mainScope.cancel()
     }
 
 }
