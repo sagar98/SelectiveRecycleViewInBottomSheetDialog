@@ -3,6 +3,7 @@ package com.sagar.selectiverecycleviewinbottonsheetdialog.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.radiobutton.MaterialRadioButton
@@ -11,18 +12,12 @@ import com.sagar.selectiverecycleviewinbottonsheetdialog.interfaces.OnFilterResu
 import com.sagar.selectiverecycleviewinbottonsheetdialog.model.SelectionListObject
 
 class BottomsheetAdapter(
-    private val selectionList: ArrayList<SelectionListObject>,
+    private val selectionList: List<SelectionListObject>,
     private val isMultiSelectAllowed: Boolean,
     private val filterResultListener: OnFilterResultListener? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private var filteredList: ArrayList<SelectionListObject> = ArrayList(selectionList)
+    private var filteredList: List<SelectionListObject> = selectionList
     private var filterQuery: String = ""
-
-    // Optional: For performance, stable IDs (causing issue)
-    /*init {
-        setHasStableIds(true)
-    }*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -49,21 +44,34 @@ class BottomsheetAdapter(
         filterQuery = query
 
         val lowerQuery = query.lowercase()
-        filteredList = if (lowerQuery.isEmpty()) {
-            ArrayList(selectionList)
+        val newFilteredList = if (lowerQuery.isEmpty()) {
+            selectionList
         } else {
-            ArrayList(selectionList.filter { it.value.lowercase().contains(lowerQuery) })
+            selectionList.filter { it.value.lowercase().contains(lowerQuery) }
         }
-        notifyDataSetChanged()
+
+        val diffCallback = object : DiffUtil.Callback() {
+            override fun getOldListSize() = filteredList.size
+            override fun getNewListSize() = newFilteredList.size
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+                filteredList[oldItemPosition].id == newFilteredList[newItemPosition].id
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+                filteredList[oldItemPosition] == newFilteredList[newItemPosition]
+        }
+
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        filteredList = newFilteredList
+        diffResult.dispatchUpdatesTo(this)
         filterResultListener?.onFilterResult(filteredList.isEmpty())
+
+        //notifyDataSetChanged()
+        //filterResultListener?.onFilterResult(filteredList.isEmpty())
     }
 
     inner class ViewHolderMultiSelect(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val checkBox: MaterialCheckBox = itemView.findViewById(R.id.checkBox)
 
         init {
-            this.setIsRecyclable(false)
-
             checkBox.setOnClickListener {
                 val pos = bindingAdapterPosition
                 if (pos == RecyclerView.NO_POSITION) return@setOnClickListener
@@ -86,8 +94,6 @@ class BottomsheetAdapter(
         private val radioButton: MaterialRadioButton = itemView.findViewById(R.id.radioButton)
 
         init {
-            this.setIsRecyclable(false)
-
             radioButton.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position == RecyclerView.NO_POSITION) return@setOnClickListener
@@ -126,6 +132,5 @@ class BottomsheetAdapter(
         }
 
     }
-
 
 }
