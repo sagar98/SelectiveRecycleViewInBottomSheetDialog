@@ -1,16 +1,14 @@
 package com.sagar.selectiverecycleviewinbottonsheetdialog
 
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -19,13 +17,17 @@ import com.sagar.selectiverecycleviewinbottonsheetdialog.databinding.Bottomsheet
 import com.sagar.selectiverecycleviewinbottonsheetdialog.interfaces.CustomBottomSheetDialogInterface
 import com.sagar.selectiverecycleviewinbottonsheetdialog.interfaces.OnFilterResultListener
 import com.sagar.selectiverecycleviewinbottonsheetdialog.model.SelectionListObject
-
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class CustomBottomSheetDialogFragment(
     private var listenerContext: CustomBottomSheetDialogInterface,
     private var title: String,
-    private var selectionList: ArrayList<SelectionListObject>,
-    private var isMultiSelectAllowed: Boolean,
+    private var selectionList: ArrayList<SelectionListObject> = ArrayList(),
+    private var isMultiSelectAllowed: Boolean = false,
     private var showSearch: Boolean = false,
 ) : BottomSheetDialogFragment(), OnFilterResultListener {
 
@@ -33,8 +35,18 @@ class CustomBottomSheetDialogFragment(
     private lateinit var bottomSheetAdapter: BottomsheetAdapter
     private var tempSelectionList: ArrayList<SelectionListObject> = ArrayList() //to save temp selection values
 
+    private val mainScope = MainScope()
+    private var filterJob: Job? = null
+
     companion object {
         const val TAG = "BottomSheetSelectionFragment"
+
+        fun safeShow(fragmentManager: FragmentManager, tag: String, fragment: CustomBottomSheetDialogFragment) {
+            if (fragment.isAdded) return
+            if (fragmentManager.findFragmentByTag(tag) == null) {
+                fragment.show(fragmentManager, tag)
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +69,7 @@ class CustomBottomSheetDialogFragment(
         val bottomSheetBehavior: BottomSheetBehavior<*> = BottomSheetBehavior.from(view.parent as View)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
-        bottomSheetAdapter = BottomsheetAdapter(tempSelectionList, isMultiSelectAllowed)
+        bottomSheetAdapter = BottomsheetAdapter(tempSelectionList, isMultiSelectAllowed,this)
 
         binding.apply {
             textTitle.text = title
@@ -117,7 +129,13 @@ class CustomBottomSheetDialogFragment(
         binding.etSearch.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                bottomSheetAdapter.filter(s.toString())
+                filterJob?.cancel()
+                filterJob = mainScope.launch {
+                    delay(200)
+                    bottomSheetAdapter.filter(s.toString())
+                }
+
+                //bottomSheetAdapter.filter(s.toString())
             }
             override fun afterTextChanged(s: Editable?) {}
         })
@@ -134,6 +152,12 @@ class CustomBottomSheetDialogFragment(
             item.isNewlySelected = selectionList.getOrNull(i)?.isSelected == true
         }
         super.onDismiss(dialog)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        filterJob?.cancel()
+        mainScope.cancel()
     }
 
 }
