@@ -40,6 +40,8 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
             insets
         }
 
+        //todo update description about the library text inside layout here
+
         binding.btnRole.setOnClickListener {
             val rolesBottomDialogFragment = CustomBottomSheetDialogLambdaFragment(
                 "Select Role",
@@ -59,18 +61,26 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
                 if (selectedRole.isNotBlank()) binding.tvSelectedRole.text = selectedRole
                 else binding.tvSelectedRole.text = "No Role Selected"
             }
-            /*val rolesBottomDialogFragment = CustomBottomSheetDialogFragment(
-                this, "Select Role",
-                roleList,
-                false,
-                showSearch = true
-            )*/
 
             CustomBottomSheetDialogLambdaFragment.safeShow(
                 supportFragmentManager,
                 CustomBottomSheetDialogFragment.TAG,
                 rolesBottomDialogFragment
             )
+
+            /**Implementation using CustomBottomSheetDialogFragment and listening to callback*/
+            /*val rolesBottomDialogFragment = CustomBottomSheetDialogFragment(
+                this, "Select Role",
+                roleList,
+                false,
+                showSearch = true
+            )
+            CustomBottomSheetDialogFragment.safeShow(
+                supportFragmentManager,
+                CustomBottomSheetDialogFragment.TAG,
+                rolesBottomDialogFragment
+            )*/
+
         }
 
         binding.btnCities.setOnClickListener {
@@ -94,18 +104,26 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
                     if (selectedCities.isNotBlank()) binding.tvSelectedCities.text = selectedCities
                     else binding.tvSelectedCities.text = "No City Selected"
                 }
-            /*val cityBottomDialogFragment = CustomBottomSheetDialogFragment(
-                this, "Select Cities",
-                cityList,
-                true,
-                showSearch = true
-            )*/
 
             CustomBottomSheetDialogLambdaFragment.safeShow(
                 supportFragmentManager,
                 CustomBottomSheetDialogFragment.TAG,
                 cityBottomDialogFragment
             )
+
+            /**Implementation using CustomBottomSheetDialogFragment and listening to callback*/
+           /* val cityBottomDialogFragment = CustomBottomSheetDialogFragment(
+                this, "Select Cities",
+                cityList,
+                true,
+                showSearch = true
+            )
+
+            CustomBottomSheetDialogFragment.safeShow(
+                supportFragmentManager,
+                CustomBottomSheetDialogFragment.TAG,
+                cityBottomDialogFragment
+            )*/
 
         }
 
@@ -118,7 +136,6 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
                 CustomBottomSheetDialogFragment.TAG,
                 cityBottomDialogFragment
             )
-
         }
     }
 
