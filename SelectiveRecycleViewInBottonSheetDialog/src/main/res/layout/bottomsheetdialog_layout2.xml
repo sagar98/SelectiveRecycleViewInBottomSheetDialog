@@ -90,8 +90,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="2dp"
-        android:visibility="visible"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="16dp"
+        android:visibility="visible">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_search"
@@ -127,8 +127,8 @@
         android:gravity="center"
         android:padding="32dp"
         android:text="Empty List"
-        android:visibility="gone"
         android:textAppearance="?textAppearanceLabelMedium"
+        android:visibility="gone"
         app:drawableStartCompat="@drawable/ic_data_object_24" />
 
     <TextView
@@ -139,9 +139,9 @@
         android:drawablePadding="8dp"
         android:gravity="center"
         android:padding="32dp"
-        android:visibility="gone"
         android:text="No match found"
         android:textAppearance="?textAppearanceLabelMedium"
+        android:visibility="gone"
         app:drawableTopCompat="@drawable/ic_search_24" />
 
     <com.google.android.material.divider.MaterialDivider
