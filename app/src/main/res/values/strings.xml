@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SelectiveRecycleViewInBottomSheetDialog</string>
-    <string name="title">Selective Recycleview using BottomSheetDialog Demo</string>
+    <string name="title">Selective RecycleView using BottomSheetDialog Demo</string>
+    <string name="description_message">This Android library provides a bottom sheet interface with a RecyclerView to display a list of selectable items. It supports both single and multi-selection modes, accepts a list of options via the SelectionListObject type, and includes built-in features like \'Select All\', \'Clear All\', and a search option to filter items.</string>
 </resources>
