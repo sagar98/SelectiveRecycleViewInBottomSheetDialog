@@ -24,11 +24,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class CustomBottomSheetDialogFragment(
-    private var listenerContext: CustomBottomSheetDialogInterface,
-    private var title: String,
-    private var selectionList: ArrayList<SelectionListObject> = ArrayList(),
-    private var isMultiSelectAllowed: Boolean = false,
-    private var showSearch: Boolean = false,
+    private val listenerContext: CustomBottomSheetDialogInterface,
+    private val title: String,
+    private val selectionList: ArrayList<SelectionListObject> = ArrayList(),
+    private val isMultiSelectAllowed: Boolean = false,
+    private val showSearch: Boolean = false,
+    private val showDragHandle: Boolean = true,
 ) : BottomSheetDialogFragment(), OnFilterResultListener {
 
     private lateinit var binding: BottomsheetdialogLayout2Binding
@@ -78,6 +79,7 @@ class CustomBottomSheetDialogFragment(
             recyclerView.isVisible = selectionList.isNotEmpty()
             emptyList.isVisible = selectionList.isEmpty()
             searchView.isVisible = showSearch && selectionList.isNotEmpty()
+            dragHandle.isVisible = showDragHandle
 
             recyclerView.apply {
                 layoutManager = LinearLayoutManager(activity)

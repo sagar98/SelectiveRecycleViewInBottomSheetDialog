@@ -24,10 +24,11 @@ import kotlinx.coroutines.launch
 
 
 class CustomBottomSheetDialogLambdaFragment(
-    private var title: String,
-    private var selectionList: ArrayList<SelectionListObject> = ArrayList(),
-    private var isMultiSelectAllowed: Boolean = false,
-    private var showSearch: Boolean = false,
+    private val title: String,
+    private val selectionList: ArrayList<SelectionListObject> = ArrayList(),
+    private val isMultiSelectAllowed: Boolean = false,
+    private val showSearch: Boolean = false,
+    private val showDragHandle: Boolean = true,
     private val onApplyClicked: () -> Unit
 ) : BottomSheetDialogFragment(), OnFilterResultListener {
 
@@ -76,6 +77,10 @@ class CustomBottomSheetDialogLambdaFragment(
             recyclerView.isVisible = selectionList.isNotEmpty()
             emptyList.isVisible = selectionList.isEmpty()
             searchView.isVisible = showSearch && selectionList.isNotEmpty()
+            dragHandle.isVisible = showDragHandle
+
+            //drag handle color options -> colorSurfaceContainerHighest | colorOnSurfaceVariant->
+            // search box background color options -> ?colorSurfaceContainerLowest | ?colorSurfaceContainerHigh
 
             recyclerView.apply {
                 layoutManager = LinearLayoutManager(activity)

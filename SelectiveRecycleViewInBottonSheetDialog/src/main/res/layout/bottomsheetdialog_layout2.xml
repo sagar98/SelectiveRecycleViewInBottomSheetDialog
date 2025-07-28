@@ -8,6 +8,15 @@
     app:behavior_hideable="true"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
+    <View
+        android:id="@+id/dragHandle"
+        android:layout_width="36dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bottomsheet_handle"/>
+
     <LinearLayout
         android:id="@+id/customToolbar"
         android:layout_width="match_parent"
@@ -69,19 +78,6 @@
 
 
     </LinearLayout>
-
-    <com.google.android.material.search.SearchBar
-        android:id="@+id/searchBar"
-        style="@style/Widget.Material3.SearchBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="16dp"
-        android:hint="Enter text here..."
-        android:visibility="gone"
-        app:defaultMarginsEnabled="false"
-        tools:visibility="gone" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/searchView"
