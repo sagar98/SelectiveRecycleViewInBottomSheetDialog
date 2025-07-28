@@ -4,7 +4,6 @@
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.BottomSheetDialog</item>
     </style>
 
-
     <style name="ThemeOverlay.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
         <item name="enableEdgeToEdge">true</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
@@ -33,7 +32,5 @@
         <item name="boxStrokeWidthFocused">0dp</item>
 
     </style>
-
-
 
 </resources>
