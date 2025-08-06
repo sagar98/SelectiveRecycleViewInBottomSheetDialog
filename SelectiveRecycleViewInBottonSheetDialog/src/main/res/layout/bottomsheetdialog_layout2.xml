@@ -126,10 +126,11 @@
         android:layout_gravity="center"
         android:drawablePadding="12dp"
         android:gravity="center"
-        android:padding="32dp"
-        android:text="Empty List"
+        android:paddingVertical="54dp"
+        android:text="@string/no_options_available"
         android:textAppearance="?textAppearanceLabelMedium"
         android:visibility="gone"
+        tools:visibility="visible"
         app:drawableStartCompat="@drawable/ic_data_object_24" />
 
     <TextView
