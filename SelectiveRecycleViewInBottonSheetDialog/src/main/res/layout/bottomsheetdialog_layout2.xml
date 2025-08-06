@@ -13,9 +13,9 @@
         android:layout_width="36dp"
         android:layout_height="4dp"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/bottomsheet_handle"/>
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bottomsheet_handle" />
 
     <LinearLayout
         android:id="@+id/customToolbar"
@@ -93,7 +93,7 @@
             android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter text here..."
+            android:hint="Search here"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:maxLines="1"
@@ -104,7 +104,8 @@
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -112,7 +113,11 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clipToPadding="false"
-        android:paddingVertical="8dp" />
+        android:fadingEdge="vertical"
+        android:paddingVertical="0dp"
+        android:requiresFadingEdge="vertical"
+        android:scrollbars="vertical"
+        />
 
     <TextView
         android:id="@+id/empty_list"
@@ -142,23 +147,24 @@
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
-
         android:orientation="horizontal"
-        android:paddingVertical="4dp">
+        android:paddingBottom="4dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_cancel"
-            style="@style/Widget.Material3.Button.TextButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:minWidth="120dp"
             android:text="Close"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_apply" />

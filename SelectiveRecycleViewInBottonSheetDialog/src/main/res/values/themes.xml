@@ -10,7 +10,7 @@
     </style>
 
     <style name="App.SearchBar" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense">
-        <item name="boxBackgroundColor">?colorSurfaceContainerHigh</item>
+        <item name="boxBackgroundColor">?colorSurfaceContainerHigh</item> <!--colorSurfaceContainerHigh | colorSurfaceContainerLowest-->
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxCornerRadiusBottomEnd">32dp</item>
         <item name="boxCornerRadiusBottomStart">32dp</item>
