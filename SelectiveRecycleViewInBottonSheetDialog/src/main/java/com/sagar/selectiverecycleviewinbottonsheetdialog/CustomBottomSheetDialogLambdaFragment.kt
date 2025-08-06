@@ -28,6 +28,7 @@ class CustomBottomSheetDialogLambdaFragment(
     private val selectionList: ArrayList<SelectionListObject> = ArrayList(),
     private val isMultiSelectAllowed: Boolean = false,
     private val showSearch: Boolean = false,
+    private val searchHint: String = "Search here",
     private val showDragHandle: Boolean = true,
     private val onApplyClicked: () -> Unit
 ) : BottomSheetDialogFragment(), OnFilterResultListener {
@@ -78,6 +79,7 @@ class CustomBottomSheetDialogLambdaFragment(
             emptyList.isVisible = selectionList.isEmpty()
             searchView.isVisible = showSearch && selectionList.isNotEmpty()
             dragHandle.isVisible = showDragHandle
+            etSearch.hint = searchHint
 
             //drag handle color options -> colorSurfaceContainerHighest | colorOnSurfaceVariant->
             // search box background color options -> ?colorSurfaceContainerLowest | ?colorSurfaceContainerHigh

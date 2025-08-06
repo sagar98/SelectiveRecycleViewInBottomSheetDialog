@@ -47,7 +47,9 @@ class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
                 "Select Role",
                 roleList,
                 false,
-                showSearch = true
+                showSearch = true,
+                searchHint = "Search Role",
+                showDragHandle = false
             ) {
                 selectedRole = ""
                 selectedRoleId = ""
