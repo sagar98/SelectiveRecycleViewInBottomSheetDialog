@@ -40,9 +40,16 @@ Implement `CustomBottomSheetDialogInterface` and show the fragment:
 ```kotlin
 class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
 
-  override fun onCustomBottomSheetSelection(type: String) {
-    val selected = items.filter { it.isSelected }
-    // use selections
+  override fun onCustomBottomSheetSelection(type: String) { //here type is the "title" string provided as constructor parameter
+    when (type) { 
+      "Case A" -> {
+             val selected = items.filter { it.isSelected }
+            // use selections
+      }
+      "Case B" -> {
+            val selected = items.filter { it.isSelected }
+            // use selections
+      }
   }
 
   fun openSheet() {
@@ -81,10 +88,30 @@ CustomBottomSheetDialogLambdaFragment.safeShow(
   }
 )
 ```
+## Try the sample app (recommended)
+
+The repository includes a sample app in the `app` module that demonstrates all features: single/multi select, debounced search, select all/clear all, callbacks, and theming.
+
+- **Run in Android Studio**
+  - Open the project in Android Studio (Hedgehog or newer).
+  - Select the `app` run configuration.
+  - Click Run ▶ to install the sample app on a device/emulator.
+
+- **Command line**
+  - Build and install directly:
+    - macOS/Linux: `./gradlew :app:installDebug`
+    - Windows: `gradlew :app:installDebug`
+  - Or build the APK and install with ADB:
+    - `./gradlew :app:assembleDebug`
+    - `adb install -r app/build/outputs/apk/debug/app-debug.apk`
+
+If you only need the library module, it is located at `SelectiveRecycleViewInBottonSheetDialog`.
+
 
 ## Theming
 
 - Uses Material 3 components and inherits colors/typography from the host app.
+- Supports dark theme.
 - Customize visibility of search and drag handle via constructor flags.
 
 ## ProGuard/R8
