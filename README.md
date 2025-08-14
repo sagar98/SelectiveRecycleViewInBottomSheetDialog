@@ -1,6 +1,8 @@
 <h1 align="center">Selective RecyclerView in BottomSheetDialog</h1>
 <p align="center">Material 3 BottomSheet with single/multi select RecyclerView, search, and simple callbacks</p>
 
+[![github-readme-hero-image.jpg](https://i.postimg.cc/rmgk9WZm/github-readme-hero-image.jpg)](https://postimg.cc/2bqMkqDR)
+
 ## Features
 
 - **Single or multiple selection**
