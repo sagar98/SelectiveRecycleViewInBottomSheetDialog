@@ -5,11 +5,11 @@
     <item
         android:id="@+id/action_clear_all"
         android:title="Clear All"
-        android:icon="@drawable/ic_clear_all_24"
+        android:icon="@drawable/srb_ic_clear_all_24"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_select_all"
         android:title="Select All"
-        android:icon="@drawable/ic_select_all_24"
+        android:icon="@drawable/srb_ic_select_all_24"
         app:showAsAction="ifRoom"/>
 </menu>

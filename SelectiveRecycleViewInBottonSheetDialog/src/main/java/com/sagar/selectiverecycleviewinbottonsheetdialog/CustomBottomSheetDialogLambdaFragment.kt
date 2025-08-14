@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sagar.selectiverecycleviewinbottonsheetdialog.adapter.BottomsheetAdapter
-import com.sagar.selectiverecycleviewinbottonsheetdialog.databinding.BottomsheetdialogLayout2Binding
+import com.sagar.selectiverecycleviewinbottonsheetdialog.databinding.SrbBottomsheetdialogLayout2Binding
 import com.sagar.selectiverecycleviewinbottonsheetdialog.interfaces.OnFilterResultListener
 import com.sagar.selectiverecycleviewinbottonsheetdialog.model.SelectionListObject
 import kotlinx.coroutines.Job
@@ -33,7 +33,7 @@ class CustomBottomSheetDialogLambdaFragment(
     private val onApplyClicked: () -> Unit
 ) : BottomSheetDialogFragment(), OnFilterResultListener {
 
-    private lateinit var binding: BottomsheetdialogLayout2Binding
+    private lateinit var binding: SrbBottomsheetdialogLayout2Binding
     private lateinit var bottomSheetAdapter: BottomsheetAdapter
     private var tempSelectionList: ArrayList<SelectionListObject> = ArrayList() //to save temp selection values
 
@@ -59,7 +59,7 @@ class CustomBottomSheetDialogLambdaFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = BottomsheetdialogLayout2Binding.inflate(layoutInflater)
+        binding = SrbBottomsheetdialogLayout2Binding.inflate(layoutInflater)
         return binding.root
     }
 

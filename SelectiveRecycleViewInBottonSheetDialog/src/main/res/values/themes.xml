@@ -1,27 +1,27 @@
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:ns1="http://schemas.android.com/apk/res-auto">
 
-    <style name="BottomSheetStyle" parent="Theme.Material3.DayNight.BottomSheetDialog">
-        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.BottomSheetDialog</item>
+    <style name="SrbBottomSheetStyle" parent="Theme.Material3.DayNight.BottomSheetDialog">
+        <item name="bottomSheetDialogTheme">@style/SrbThemeOverlay.BottomSheetDialog</item>
     </style>
 
-    <style name="ThemeOverlay.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+    <style name="SrbThemeOverlay.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
         <item name="enableEdgeToEdge">true</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="App.SearchBar" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+    <style name="SrbApp.SearchBar" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense">
         <item name="boxBackgroundColor">?colorSurfaceContainerHigh</item> <!--colorSurfaceContainerHigh | colorSurfaceContainerLowest-->
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxCornerRadiusBottomEnd">32dp</item>
         <item name="boxCornerRadiusBottomStart">32dp</item>
         <item name="boxCornerRadiusTopEnd">32dp</item>
         <item name="boxCornerRadiusTopStart">32dp</item>
-        <item name="endIconDrawable">@drawable/ic_close_24</item>
+        <item name="endIconDrawable">@drawable/srb_ic_close_24</item>
         <item name="endIconMode">clear_text</item>
         <item name="hintEnabled">false</item>
         <item name="startIconTint">?attr/colorOnSurfaceVariant</item>
         <item name="endIconTint">?attr/colorOnSurfaceVariant</item>
-        <item name="startIconDrawable">@drawable/ic_search_24</item>
+        <item name="startIconDrawable">@drawable/srb_ic_search_24</item>
         <item name="startIconContentDescription">Search</item>
         <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
         <item name="android:textColor">?attr/colorOnSurface</item>

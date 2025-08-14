@@ -22,10 +22,10 @@ class BottomsheetAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
         return if (isMultiSelectAllowed) {
-            val view = layoutInflater.inflate(R.layout.list_item_multi_select, parent, false)
+            val view = layoutInflater.inflate(R.layout.srb_list_item_multi_select, parent, false)
             ViewHolderMultiSelect(view)
         } else {
-            val view = layoutInflater.inflate(R.layout.list_item_single_select, parent, false)
+            val view = layoutInflater.inflate(R.layout.srb_list_item_single_select, parent, false)
             ViewHolderSingleSelect(view)
         }
     }
