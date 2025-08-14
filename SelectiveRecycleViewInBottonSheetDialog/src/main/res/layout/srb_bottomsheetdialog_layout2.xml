@@ -8,6 +8,15 @@
     app:behavior_hideable="true"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
+    <View
+        android:id="@+id/dragHandle"
+        android:layout_width="36dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/srb_bottomsheet_handle" />
+
     <LinearLayout
         android:id="@+id/customToolbar"
         android:layout_width="match_parent"
@@ -24,7 +33,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="8dp"
-            android:src="@drawable/ic_close_24"
+            android:src="@drawable/srb_ic_close_24"
             android:tooltipText="Close" />
 
         <TextView
@@ -32,8 +41,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="16dp"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="2"
@@ -50,7 +59,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="8dp"
-            android:src="@drawable/ic_clear_all_24"
+            android:src="@drawable/srb_ic_clear_all_24"
             android:tooltipText="Clear all" />
 
 
@@ -64,15 +73,39 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="8dp"
-            android:src="@drawable/ic_select_all_24"
+            android:src="@drawable/srb_ic_select_all_24"
             android:tooltipText="Select all" />
 
 
     </LinearLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/searchView"
+        style="@style/SrbApp.SearchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="16dp"
+        android:visibility="visible">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search here"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColorHint="?attr/colorOnSurfaceVariant" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -80,39 +113,59 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clipToPadding="false"
-        android:paddingVertical="8dp" />
-    
+        android:fadingEdge="vertical"
+        android:paddingVertical="0dp"
+        android:requiresFadingEdge="vertical"
+        android:scrollbars="vertical"
+        />
+
     <TextView
         android:id="@+id/empty_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Empty List"
-        android:gravity="center"
         android:layout_gravity="center"
         android:drawablePadding="12dp"
-        android:padding="32dp"
+        android:gravity="center"
+        android:paddingVertical="54dp"
+        android:text="@string/srb_no_options_available"
         android:textAppearance="?textAppearanceLabelMedium"
-        app:drawableStartCompat="@drawable/ic_data_object_24" />
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:drawableStartCompat="@drawable/srb_ic_data_object_24" />
+
+    <TextView
+        android:id="@+id/empty_search_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:padding="32dp"
+        android:text="No match found"
+        android:textAppearance="?textAppearanceLabelMedium"
+        android:visibility="gone"
+        app:drawableTopCompat="@drawable/srb_ic_search_24" />
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
-
         android:orientation="horizontal"
-        android:paddingVertical="4dp">
+        android:paddingBottom="4dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_cancel"
-            style="@style/Widget.Material3.Button.TextButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:minWidth="120dp"
             android:text="Close"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_apply" />

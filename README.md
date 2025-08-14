@@ -1,118 +1,128 @@
+<h1 align="center">Selective RecyclerView in BottomSheetDialog</h1>
+<p align="center">Material 3 BottomSheet with single/multi select RecyclerView, search, and simple callbacks</p>
 
-<h1 align="center">SelectiveRecycleViewInBottomSheetDialog</h1>
-<p align="center">Android native BottomsheetDialog in recycleview</p>
-  
-### Summary  
+[![github-readme-hero-image.jpg](https://i.postimg.cc/rmgk9WZm/github-readme-hero-image.jpg)](https://postimg.cc/2bqMkqDR)
 
-This library allows you to use the BottomsheetDialog in recycleview for item/s selection.
+## Features
 
-[![Group-59.png](https://i.postimg.cc/QCYCsM4S/Group-59.png)](https://postimg.cc/YLgMztwm)
+- **Single or multiple selection**
+- **Debounced search** and empty state
+- **Select all / Clear all**
+- **Interface or lambda callback APIs**
 
-### Features
-- **Single option selection**
-- **Multiple option selection**
-- **Clear all selection**
-- **Clear current selection using close bottomsheet**
+## Installation (JitPack)
 
-## Download  
-  
-> Step 1. Add the JitPack repository to your build file:
-   
-```gradle 
-allprojects {
-	repositories {
-		...
-		maven { url 'https://jitpack.io' }
-	}
-}
-```
-	
-> Step 2. Add the dependency:
+Add JitPack to repositories and the dependency:
 
 ```gradle
+// settings.gradle or top-level repositories
+maven { url 'https://jitpack.io' }
 
-implementation 'com.github.sagar98:SelectiveRecycleViewInBottomSheetDialog:Tag'
+// module build.gradle
+implementation 'com.github.sagar98:SelectiveRecycleViewInBottomSheetDialog:<latest-tag>'
+```
 
-```  
-  
-  
-## Use  
+## Quick start
 
-It is recommended that you review the project to get a full understanding of library. 
-> Step 1:-
-To use bottom sheet in recycleview for selection of items, you need to implement ```CustomBottomSheetDialogInterface```
-and override ```onCustomBottomSheetSelection()``` method.
+Define your list using `SelectionListObject`:
 
-Example:
+```kotlin
+val items = arrayListOf(
+  SelectionListObject(id = "1", value = "Option A"),
+  SelectionListObject(id = "2", value = "Option B", isSelected = true)
+)
+```
+
+### Option A: Interface callback
+
+Implement `CustomBottomSheetDialogInterface` and show the fragment:
 
 ```kotlin
 class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
 
-  private var sampleList: ArrayList<SelectionListObject> = ArrayList()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-     }
-
-  override fun onCustomBottomSheetSelection(type: String) {
-     when (type) {
+  override fun onCustomBottomSheetSelection(type: String) { //here type is the "title" string provided as constructor parameter
+    when (type) { 
       "Case A" -> {
-           // your code here
+             val selected = items.filter { it.isSelected }
+            // use selections
       }
       "Case B" -> {
-           // your code here
+            val selected = items.filter { it.isSelected }
+            // use selections
       }
-   }
+  }
+
+  fun openSheet() {
+    CustomBottomSheetDialogFragment.safeShow(
+      supportFragmentManager,
+      CustomBottomSheetDialogFragment.TAG,
+      CustomBottomSheetDialogFragment(
+        listenerContext = this,
+        title = "Filter",
+        selectionList = items,
+        isMultiSelectAllowed = true,
+        showSearch = true,
+        searchHint = "Search options",
+        showDragHandle = true
+      )
+    )
+  }
 }
 ```
 
-> Step 2:-
-create arraylist which you have to provide to recycleview.
-This arraylist will be of type SelectionListObject() which will contain<br>
-val id: String, val value: String, var isSelected: Boolean<br>
-If you have to display preselected item/s, set isSelected- true for respective item/s.
+### Option B: Lambda callback
 
-You can simply run for loop on your actual list and create ```SelectionListObject``` with id, value of each item and
-then populate ```ArrayList<SelectionListObject>```.
-
->Step 3:-
-Call ```CustomBottomSheetDialogClass()``` to display bottomsheet in recycleview for items selection.
- 
-Call ```CustomBottomSheetDialogClass()``` as shown below, where you want to open bottomsheet dialog recycleview with selectable items.<br>
-Ex. On particular Button clicked action, bottomsheet dialog will open and user will select single or multiple items.
-
-    val sampleBottomSheetDialog = CustomBottomSheetDialogClass(this,
-            this, "Case A", sampleList, false)
-    sampleBottomSheetDialog.show()
-    sampleBottomSheetDialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-        ViewGroup.LayoutParams.MATCH_PARENT)
-
-Here, you need to pass five parameters to ```CustomBottomSheetDialogClass()```.
-<br> 1st is ActivityContext,<br>
-2nd is extended interface listener context,<br>
-3rd is title string which will be displayed as bottomsheet title and we will use same string to differentiate between multiple BottomsheetDialog
- responses.<br>
-4th is actual list of items- ArrayList<SelectionListObject><br>
-5th is "isMultiSelectAllowed" boolean value.<br>
- true:- multiselection is allowed.<br>
- false:- Only single item selection is allowed.<br>
- 
- Overrided below method from implementated interface will provide item/items selected by user.
-3rd parameter in ```CustomBottomSheetDialogClass()``` is used in below overridden method to differentiate between multiple BottomsheetDialog
-responses.
+```kotlin
+CustomBottomSheetDialogLambdaFragment.safeShow(
+  supportFragmentManager,
+  "FilterSheet",
+  CustomBottomSheetDialogLambdaFragment(
+    title = "Filter",
+    selectionList = items,
+    isMultiSelectAllowed = true,
+    showSearch = true,
+    searchHint = "Search options",
+    showDragHandle = true
+  ) {
+    val selected = items.filter { it.isSelected }
+  }
+)
 ```
+## Try the sample app (recommended)
 
-override fun onCustomBottomSheetSelection(type: String) {
-     when (type) {
-      "Case A" -> {
-           // your code here
-      }
-      "Case B" -> {
-           // your code here
-      }
-   }
+The repository includes a sample app in the `app` module that demonstrates all features: single/multi select, debounced search, select all/clear all, callbacks, and theming.
 
-```
+- **Run in Android Studio**
+  - Open the project in Android Studio (Hedgehog or newer).
+  - Select the `app` run configuration.
+  - Click Run ▶ to install the sample app on a device/emulator.
+
+- **Command line**
+  - Build and install directly:
+    - macOS/Linux: `./gradlew :app:installDebug`
+    - Windows: `gradlew :app:installDebug`
+  - Or build the APK and install with ADB:
+    - `./gradlew :app:assembleDebug`
+    - `adb install -r app/build/outputs/apk/debug/app-debug.apk`
+
+If you only need the library module, it is located at `SelectiveRecycleViewInBottonSheetDialog`.
+
+
+## Theming
+
+- Uses Material 3 components and inherits colors/typography from the host app.
+- Supports dark theme.
+- Customize visibility of search and drag handle via constructor flags.
+
+## ProGuard/R8
+
+No additional keep rules required.
+
+## Compatibility
+
+- minSdk 21, targetSdk 36
+- Java/Kotlin 17, AndroidX
+
+## License
+
+Apache-2.0. See `LICENSE`.

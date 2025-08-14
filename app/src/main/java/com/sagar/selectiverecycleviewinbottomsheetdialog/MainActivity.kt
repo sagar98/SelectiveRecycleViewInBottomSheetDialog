@@ -14,131 +14,161 @@ import com.sagar.selectiverecycleviewinbottonsheetdialog.model.SelectionListObje
 
 class MainActivity : AppCompatActivity(), CustomBottomSheetDialogInterface {
 
-	private lateinit var binding: ActivityMainBinding
-	private var roleList: ArrayList<SelectionListObject> = ArrayList()
-	private var cityList: ArrayList<SelectionListObject> = ArrayList()
-	private var emptyList: ArrayList<SelectionListObject> = ArrayList()
-	private lateinit var selectedRole: String
-	private lateinit var selectedRoleId: String
-	private lateinit var selectedCities: String
+    private lateinit var binding: ActivityMainBinding
+    private var roleList: ArrayList<SelectionListObject> = DataList.roleList
+    private var cityList: ArrayList<SelectionListObject> = DataList.cityList
+    private var emptyList: ArrayList<SelectionListObject> = ArrayList()
+    private lateinit var selectedRole: String
+    private lateinit var selectedRoleId: String
+    private lateinit var selectedCities: String
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		enableEdgeToEdge()
-		super.onCreate(savedInstanceState)
-		binding = ActivityMainBinding.inflate(layoutInflater)
-		setContentView(binding.root)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-		ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
-			val systemBarsInsets =
-				insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.ime())
-			view.updatePadding(
-				left = systemBarsInsets.left,
-				top = systemBarsInsets.top,
-				right = systemBarsInsets.right,
-				bottom = systemBarsInsets.bottom
-			)
-			insets
-		}
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val systemBarsInsets =
+                insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.ime())
+            view.updatePadding(
+                left = systemBarsInsets.left,
+                top = systemBarsInsets.top,
+                right = systemBarsInsets.right,
+                bottom = systemBarsInsets.bottom
+            )
+            insets
+        }
 
-		roleList = arrayListOf(
-			SelectionListObject("1", "Developer", false),
-			SelectionListObject("4", "Project Manager", false),
-			SelectionListObject("2", "Team Lead", false),
-			SelectionListObject("7", "Analyst", false)
-		)
+        //todo update description about the library text inside layout here
 
-		cityList = arrayListOf(
-			SelectionListObject("1", "Pune", false),
-			SelectionListObject("2", "Bangalore", false),
-			SelectionListObject("3", "Mumbai", false),
-			SelectionListObject("4", "Chennai", false),
-			SelectionListObject("5", "Kolkata", false),
-			SelectionListObject("6", "Nashik", false),
-			SelectionListObject("7", "Noida", false),
-			SelectionListObject("8", "City2", false),
-			SelectionListObject("9", "City3", false),
-			SelectionListObject("10", "City4", false),
-			SelectionListObject("11", "City5", false),
-			SelectionListObject("12", "City6", false),
-			SelectionListObject("13", "City7", false),
-			SelectionListObject("14", "City8", false),
-			SelectionListObject("15", "City5", false),
-			SelectionListObject("16", "City6", false),
-		)
+        binding.btnRole.setOnClickListener {
+            val rolesBottomDialogFragment = CustomBottomSheetDialogLambdaFragment(
+                "Select Role",
+                roleList,
+                false,
+                showSearch = true,
+                searchHint = "Search Role",
+                showDragHandle = false
+            ) {
+                selectedRole = ""
+                selectedRoleId = ""
+                for (obj in roleList) {
+                    if (obj.isSelected) {
+                        selectedRole = obj.value
+                        selectedRoleId = obj.id
+                        break
+                    }
+                }
+                if (selectedRole.isNotBlank()) binding.tvSelectedRole.text = selectedRole
+                else binding.tvSelectedRole.text = "No Role Selected"
+            }
 
-		binding.btnRole.setOnClickListener {
-			val rolesBottomDialogFragment = CustomBottomSheetDialogFragment(
-				this, "Select Role",
-				roleList,
-				false
-			)
-			rolesBottomDialogFragment.show(
-				supportFragmentManager,
-				CustomBottomSheetDialogFragment.TAG
-			)
-		}
+            CustomBottomSheetDialogLambdaFragment.safeShow(
+                supportFragmentManager,
+                CustomBottomSheetDialogFragment.TAG,
+                rolesBottomDialogFragment
+            )
 
-		binding.btnCities.setOnClickListener {
-			val cityBottomDialogFragment =
-				CustomBottomSheetDialogLambdaFragment("Select Cities", cityList, true) {
-					selectedCities = ""
-					for (obj in cityList) {
-						if (obj.isSelected) {
-							selectedCities = if (selectedCities != "") {
-								selectedCities + "," + obj.value
-							} else {
-								obj.value
-							}
-						}
-					}
-					binding.tvSelectedCities.text = selectedCities
-				}
-			cityBottomDialogFragment.show(
-				supportFragmentManager,
-				CustomBottomSheetDialogFragment.TAG
-			)
-		}
+            /**Implementation using CustomBottomSheetDialogFragment and listening to callback*/
+            /*val rolesBottomDialogFragment = CustomBottomSheetDialogFragment(
+                this, "Select Role",
+                roleList,
+                false,
+                showSearch = true
+            )
+            CustomBottomSheetDialogFragment.safeShow(
+                supportFragmentManager,
+                CustomBottomSheetDialogFragment.TAG,
+                rolesBottomDialogFragment
+            )*/
 
-		binding.btnNoData.setOnClickListener {
-			val cityBottomDialogFragment =
-				CustomBottomSheetDialogLambdaFragment("List Title", emptyList, true) {
+        }
 
-				}
-			cityBottomDialogFragment.show(
-				supportFragmentManager,
-				CustomBottomSheetDialogFragment.TAG
-			)
-		}
-	}
+        binding.btnCities.setOnClickListener {
+            val cityBottomDialogFragment =
+                CustomBottomSheetDialogLambdaFragment(
+                    "Select Cities", cityList,
+                    isMultiSelectAllowed = true,
+                    showSearch = true
+                ) {
+                    selectedCities = ""
+                    for (obj in cityList) {
+                        if (obj.isSelected) {
+                            selectedCities = if (selectedCities != "") {
+                                selectedCities + ", " + obj.value
+                            } else {
+                                obj.value
+                            }
+                        }
+                    }
 
-	override fun onCustomBottomSheetSelection(type: String) {
-		when (type) {
-			"Select Role" -> {
-				selectedRole = ""
-				selectedRoleId = ""
-				for (obj in roleList) {
-					if (obj.isSelected) {
-						selectedRole = obj.value
-						selectedRoleId = obj.id
-						break
-					}
-				}
-				binding.tvSelectedRole.text = selectedRole
-			}
+                    if (selectedCities.isNotBlank()) binding.tvSelectedCities.text = selectedCities
+                    else binding.tvSelectedCities.text = "No City Selected"
+                }
 
-			"Select Cities" -> {
-				selectedCities = ""
-				for (obj in cityList) {
-					if (obj.isSelected) {
-						selectedCities = if (selectedCities != "") {
-							selectedCities + "," + obj.value
-						} else {
-							obj.value
-						}
-					}
-				}
-				binding.tvSelectedCities.text = selectedCities
-			}
-		}
-	}
+            CustomBottomSheetDialogLambdaFragment.safeShow(
+                supportFragmentManager,
+                CustomBottomSheetDialogFragment.TAG,
+                cityBottomDialogFragment
+            )
+
+            /**Implementation using CustomBottomSheetDialogFragment and listening to callback*/
+           /* val cityBottomDialogFragment = CustomBottomSheetDialogFragment(
+                this, "Select Cities",
+                cityList,
+                true,
+                showSearch = true
+            )
+
+            CustomBottomSheetDialogFragment.safeShow(
+                supportFragmentManager,
+                CustomBottomSheetDialogFragment.TAG,
+                cityBottomDialogFragment
+            )*/
+
+        }
+
+        binding.btnNoData.setOnClickListener {
+            val cityBottomDialogFragment =
+                CustomBottomSheetDialogLambdaFragment("List Title", emptyList, true) {}
+
+            CustomBottomSheetDialogLambdaFragment.safeShow(
+                supportFragmentManager,
+                CustomBottomSheetDialogFragment.TAG,
+                cityBottomDialogFragment
+            )
+        }
+    }
+
+    override fun onCustomBottomSheetSelection(type: String) {
+        when (type) {
+            "Select Role" -> {
+                selectedRole = ""
+                selectedRoleId = ""
+                for (obj in roleList) {
+                    if (obj.isSelected) {
+                        selectedRole = obj.value
+                        selectedRoleId = obj.id
+                        break
+                    }
+                }
+                binding.tvSelectedRole.text = selectedRole
+            }
+
+            "Select Cities" -> {
+                selectedCities = ""
+                for (obj in cityList) {
+                    if (obj.isSelected) {
+                        selectedCities = if (selectedCities != "") {
+                            selectedCities + ", " + obj.value
+                        } else {
+                            obj.value
+                        }
+                    }
+                }
+                binding.tvSelectedCities.text = selectedCities
+            }
+        }
+    }
 }

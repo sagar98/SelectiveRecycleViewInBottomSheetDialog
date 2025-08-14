@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">SelectiveRecycleViewInBottomSheetDialog</string>
+    <string name="srb_app_name">SelectiveRecycleViewInBottomSheetDialog</string>
+    <string name="srb_no_options_available">No options available</string>
 </resources>
